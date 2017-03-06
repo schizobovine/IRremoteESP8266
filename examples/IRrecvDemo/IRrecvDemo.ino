@@ -21,7 +21,12 @@ void setup()
 
 void loop() {
   if (irrecv.decode(&results)) {
-    Serial.println(results.value, HEX);
+    // If the result is larger than a 32bit int, print the top half
+    // then the lower half.
+    // The Arduino framework doesn't play well printing 64bit values.
+    if (results.value > 0xFFFFFFFFULL)
+      Serial.print((uint32_t) (results.value >> 32), HEX);
+    Serial.println((uint32_t) (results.value & 0xFFFFFFFFULL), HEX);
     irrecv.resume(); // Receive the next value
   }
   delay(100);

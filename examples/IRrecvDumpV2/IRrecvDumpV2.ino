@@ -29,7 +29,12 @@ void  ircode (decode_results *results)
   }
 
   // Print Code
-  Serial.print(results->value, HEX);
+  // If the result is larger than a 32bit int, print the top half
+  // then the lower half.
+  // The Arduino framework doesn't play well printing 64bit values.
+  if (results->value > 0xFFFFFFFFULL)
+    Serial.print((uint32_t) (results->value >> 32), HEX);
+  Serial.println((uint32_t) (results->value & 0xFFFFFFFFULL), HEX);
 }
 
 //+=============================================================================
@@ -124,7 +129,7 @@ void  dumpCode (decode_results *results)
   }
 
   // End declaration
-  Serial.print("};");  // 
+  Serial.print("};");  //
 
   // Comment
   Serial.print("  // ");
@@ -147,7 +152,12 @@ void  dumpCode (decode_results *results)
 
     // All protocols have data
     Serial.print("unsigned int  data = 0x");
-    Serial.print(results->value, HEX);
+    // If the result is larger than a 32bit int, print the top half
+    // then the lower half.
+    // The Arduino framework doesn't play well printing 64bit values.
+    if (results->value > 0xFFFFFFFFULL)
+      Serial.print((uint32_t) (results->value >> 32), HEX);
+    Serial.println((uint32_t) (results->value & 0xFFFFFFFFULL), HEX);
     Serial.println(";");
   }
 }

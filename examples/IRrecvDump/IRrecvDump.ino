@@ -59,7 +59,12 @@ void dump(decode_results *results) {
   else if (results->decode_type == WHYNTER) {
     Serial.print("Decoded Whynter: ");
   }
-  Serial.print(results->value, HEX);
+  // If the result is larger than a 32bit int, print the top half
+  // then the lower half.
+  // The Arduino framework doesn't play well printing 64bit values.
+  if (results->value > 0xFFFFFFFFULL)
+    Serial.print((uint32_t) (results->value >> 32), HEX);
+  Serial.print((uint32_t) (results->value & 0xFFFFFFFFULL), HEX);
   Serial.print(" (");
   Serial.print(results->bits, DEC);
   Serial.println(" bits)");
