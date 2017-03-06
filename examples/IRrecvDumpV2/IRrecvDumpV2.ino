@@ -34,7 +34,7 @@ void  ircode (decode_results *results)
   // The Arduino framework doesn't play well printing 64bit values.
   if (results->value > 0xFFFFFFFFULL)
     Serial.print((uint32_t) (results->value >> 32), HEX);
-  Serial.println((uint32_t) (results->value & 0xFFFFFFFFULL), HEX);
+  Serial.print((uint32_t) (results->value & 0xFFFFFFFFULL), HEX);
 }
 
 //+=============================================================================
@@ -157,7 +157,7 @@ void  dumpCode (decode_results *results)
     // The Arduino framework doesn't play well printing 64bit values.
     if (results->value > 0xFFFFFFFFULL)
       Serial.print((uint32_t) (results->value >> 32), HEX);
-    Serial.println((uint32_t) (results->value & 0xFFFFFFFFULL), HEX);
+    Serial.print((uint32_t) (results->value & 0xFFFFFFFFULL), HEX);
     Serial.println(";");
   }
 }
