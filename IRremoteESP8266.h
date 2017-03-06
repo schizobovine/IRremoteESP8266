@@ -77,7 +77,7 @@ public:
     unsigned int panasonicAddress;
     unsigned int sharpAddress;
   };
-  unsigned long value; // Decoded value
+  unsigned long long value; // Decoded value
   int bits; // Number of bits in decoded value
   volatile unsigned int *rawbuf; // Raw intervals in .5 us ticks
   int rawlen; // Number of records in rawbuf.
@@ -192,7 +192,7 @@ public:
   void sendRaw(unsigned int buf[], int len, int hz);
   void sendGC(unsigned int buf[], int len);
   void sendRC5(unsigned long data, int nbits);
-  void sendRC6(unsigned long data, int nbits);
+  void sendRC6(unsigned long long data, int nbits);
   void sendDISH(unsigned long data, int nbits);
   void sendSharp(unsigned int address, unsigned int command);
   void sendSharpRaw(unsigned long data, int nbits);
