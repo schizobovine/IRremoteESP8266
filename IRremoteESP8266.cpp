@@ -306,7 +306,7 @@ void IRsend::sendRC5(unsigned long data, int nbits) {
 // Caller needs to take care of flipping the toggle bit
 void IRsend::sendRC6(unsigned long long data, int nbits) {
   // Check if we've been asked to send more bits than we have.
-  if (sizeof(data) * 8 > nbits)
+  if ((int) sizeof(data) * 8 > nbits)
     return;  // Can't send more than we have, so don't send anything.
   // Set IR carrier frequency
   enableIROut(36);
@@ -317,7 +317,7 @@ void IRsend::sendRC6(unsigned long long data, int nbits) {
   space(RC6_T1);
   unsigned int t;
   // Data
-  for (unsigned long long i = 0, mask = 1UL << (nbits - 1); mask; i++, mask >>= 1) {
+  for (unsigned long long i = 0, mask = 1ULL << (nbits - 1); mask; i++, mask >>= 1) {
     // The fourth bit we send is a "double width trailer bit".
     if (i == 3) {
       // double-wide trailer bit
