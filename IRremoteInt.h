@@ -99,14 +99,21 @@
 #define MITSUBISHI_AC_RPT_MARK    440
 #define MITSUBISHI_AC_RPT_SPACE   17100L
 
+// Ref:
+//   https://en.wikipedia.org/wiki/RC-5
+//   http://www.sbprojects.com/knowledge/ir/rc5.php
+#define RC5_RAW_BITS               14U
+#define RC5_T1                    889U
+#define RC5_MIN_COMMAND_LENGTH 113778UL
+#define RC5_MIN_GAP RC5_MIN_COMMAND_LENGTH - RC5_RAW_BITS * (2 * RC5_T1)
 
-#define RC5_T1		889
-#define RC5_RPT_LENGTH	46000
-
-#define RC6_HDR_MARK	2666
-#define RC6_HDR_SPACE	889
-#define RC6_T1		444
-#define RC6_RPT_LENGTH	46000
+// Ref:
+//   https://en.wikipedia.org/wiki/RC-6
+//   http://www.pcbheaven.com/userpages/The_Philips_RC6_Protocol/
+#define RC6_HDR_MARK             2666U
+#define RC6_HDR_SPACE             889U
+#define RC6_T1                    444U
+#define RC6_RPT_LENGTH          83000UL
 
 // http://www.sbprojects.com/knowledge/ir/rcmm.php
 #define RCMM_HDR_MARK 416
@@ -209,8 +216,8 @@
 // Some useful constants
 #define USECPERTICK 50  // microseconds per clock interrupt tick
 #define RAWBUF 100 // Length of raw duration buffer
-#define HEADER 2  // Usual nr. of header entries.
-#define FOOTER 2  // Usual nr. of footer (stop bits) entries.
+#define HEADER 2U  // Usual nr. of header entries.
+#define FOOTER 2U  // Usual nr. of footer (stop bits) entries.
 #define OFFSET_START 1  // Usual rawbuf entry to start processing from.
 
 // Marks tend to be 100us too long, and spaces 100us too short
@@ -255,7 +262,10 @@ extern volatile irparams_t irparams;
 #define SANYO_BITS 12
 #define MITSUBISHI_BITS 16
 #define MIN_RC5_SAMPLES 11
-#define MIN_RC6_SAMPLES 1
+#define RC5_BITS RC5_RAW_BITS - 2
+#define RC5X_BITS RC5_RAW_BITS - 1
+#define RC6_MODE0_BITS 20  // Excludes the 'start' bit.
+#define RC6_36_BITS 36  // Excludes the 'start' bit.
 #define PANASONIC_BITS 48
 #define JVC_BITS 16
 #define LG_BITS 28

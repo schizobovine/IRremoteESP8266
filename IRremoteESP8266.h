@@ -70,7 +70,8 @@ enum decode_type_t {
   KELVINATOR,
   SHERWOOD,
   MITSUBISHI_AC,
-  RCMM
+  RCMM,
+  RC5X
 };
 
 // Results returned from the decoder
@@ -123,14 +124,17 @@ public:
   private:
   // These are called by decode
   void copyIrParams(irparams_t *dest);
-  int getRClevel(decode_results *results, int *offset, int *used, int t1);
+  int getRClevel(decode_results *results, unsigned int *offset,
+                 unsigned int *used, unsigned int bitTime);
   bool decodeNEC(decode_results *results, uint16_t nbits=NEC_BITS,
                  bool strict=false);
   bool decodeSony(decode_results *results);
   bool decodeSanyo(decode_results *results);
   bool decodeMitsubishi(decode_results *results);
-  bool decodeRC5(decode_results *results);
-  bool decodeRC6(decode_results *results);
+  bool decodeRC5(decode_results *results, uint16_t nbits=RC5X_BITS,
+                 bool strict=false);
+  bool decodeRC6(decode_results *results, uint16_t nbits=RC6_MODE0_BITS,
+                 bool strict=false);
   bool decodeRCMM(decode_results *results);
   bool decodePanasonic(decode_results *results, uint16_t nbits=PANASONIC_BITS,
                        bool strict=false);
@@ -205,8 +209,10 @@ public:
   //  void sendMitsubishi(unsigned long data, int nbits);
   void sendRaw(unsigned int buf[], int len, int hz);
   void sendGC(unsigned int buf[], int len);
-  void sendRC5(unsigned long data, int nbits);
-  void sendRC6(unsigned long long data, unsigned int nbits, unsigned int repeat=0);
+  void sendRC5(unsigned long long data, unsigned int nbits=RC5X_BITS,
+               unsigned int repeat=0);
+  void sendRC6(unsigned long long data, unsigned int nbits=RC6_MODE0_BITS,
+               unsigned int repeat=0);
   void sendRCMM(uint32_t data, uint8_t nbits=24);
   // sendDISH() should typically be called with repeat=3 as DISH devices
   // expect the code to be sent at least 4 times. (code + 3 repeats = 4 codes)

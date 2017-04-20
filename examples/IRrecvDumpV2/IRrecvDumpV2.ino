@@ -52,6 +52,7 @@ void encoding(decode_results *results) {
     case NEC:          Serial.print("NEC");           break ;
     case SONY:         Serial.print("SONY");          break ;
     case RC5:          Serial.print("RC5");           break ;
+    case RC5X:         Serial.print("RC5X");          break ;
     case RC6:          Serial.print("RC6");           break ;
     case DISH:         Serial.print("DISH");          break ;
     case SHARP:        Serial.print("SHARP");         break ;
@@ -159,7 +160,7 @@ void dumpCode (decode_results *results) {
     }
 
     // All protocols have data
-    Serial.print("unsigned int  data = 0x");
+    Serial.print("unsigned long long  data = 0x");
     //   print() & println() can't handle printing long longs. (uint64_t)
     //   So we have to print the top and bottom halves separately.
     if (results->value >> 32)

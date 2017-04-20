@@ -39,6 +39,9 @@ void dump(decode_results *results) {
   else if (results->decode_type == RC5) {
     Serial.print("Decoded RC5: ");
   }
+  else if (results->decode_type == RC5X) {
+    Serial.print("Decoded RC5X: ");
+  }
   else if (results->decode_type == RC6) {
     Serial.print("Decoded RC6: ");
   }
